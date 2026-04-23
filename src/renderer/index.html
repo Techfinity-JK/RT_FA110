@@ -20,9 +20,17 @@
     </header>
 
     <div class="toolbar">
-      <button id="btn-connect">Reconnect</button>
+      <div class="ip-field">
+        <label for="input-ip">Device IP</label>
+        <input type="text" id="input-ip" placeholder="192.168.1.193" spellcheck="false" />
+        <label for="input-commkey">Comm Key</label>
+        <input type="text" id="input-commkey" placeholder="272727" spellcheck="false" />
+        <button id="btn-connect">Connect</button>
+      </div>
+      <div class="toolbar-sep"></div>
       <button id="btn-disconnect">Disconnect</button>
       <button id="btn-info">Device Info</button>
+      <button id="btn-fetch">Fetch Log</button>
       <button id="btn-clear">Clear Log</button>
       <label class="pause-label">
         <input type="checkbox" id="chk-pause" /> Pause

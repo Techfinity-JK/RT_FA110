@@ -90,6 +90,48 @@ button:active { background: #2b6cb0; }
   margin-left: 6px;
 }
 
+.ip-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ip-field label {
+  font-size: 0.8rem;
+  color: #718096;
+  white-space: nowrap;
+}
+
+.ip-field input {
+  background: #0f1117;
+  border: 1px solid #4a5568;
+  border-radius: 5px;
+  color: #e2e8f0;
+  font-size: 0.83rem;
+  padding: 4px 10px;
+  outline: none;
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+  transition: border-color 0.15s;
+}
+
+#input-ip      { width: 140px; }
+#input-commkey { width: 90px; }
+
+.ip-field input:focus {
+  border-color: #63b3ed;
+}
+
+.ip-field input.invalid {
+  border-color: #fc8181;
+}
+
+.toolbar-sep {
+  width: 1px;
+  height: 22px;
+  background: #2d3748;
+  margin: 0 4px;
+}
+
 .event-count {
   margin-left: auto;
   font-size: 0.82rem;
