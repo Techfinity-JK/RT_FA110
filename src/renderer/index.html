@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RT FA110 — ZKTeco Live Events</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>ZKTeco FA110 — Live Events</h1>
+      <div class="status-bar">
+        <span id="status-dot" class="dot disconnected"></span>
+        <span id="status-text">Connecting…</span>
+        <span id="device-ip"></span>
+      </div>
+    </header>
+
+    <div class="toolbar">
+      <button id="btn-connect">Reconnect</button>
+      <button id="btn-disconnect">Disconnect</button>
+      <button id="btn-info">Device Info</button>
+      <button id="btn-clear">Clear Log</button>
+      <label class="pause-label">
+        <input type="checkbox" id="chk-pause" /> Pause
+      </label>
+      <span class="event-count">Events: <strong id="event-count">0</strong></span>
+    </div>
+
+    <div id="info-panel" class="info-panel hidden"></div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Timestamp</th>
+            <th>User ID</th>
+            <th>Att Time</th>
+            <th>Verify</th>
+            <th>In/Out</th>
+            <th>Work Code</th>
+          </tr>
+        </thead>
+        <tbody id="event-tbody"></tbody>
+      </table>
+      <div id="empty-state" class="empty-state">Waiting for events…</div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

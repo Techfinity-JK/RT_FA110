@@ -1,0 +1,19 @@
+{
+  "name": "rt-fa110",
+  "version": "1.0.0",
+  "description": "Real-time ZKTeco FA110 event viewer via Electron",
+  "main": "src/main/index.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev"
+  },
+  "dependencies": {
+    "node-zklib": "^1.0.5"
+  },
+  "devDependencies": {
+    "electron": "^29.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
