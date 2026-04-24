@@ -13,6 +13,7 @@ process.on('unhandledRejection', (reason) => {
 // FA110 connection config — IP and comm key can be overridden at runtime via IPC
 let DEVICE_IP = '192.168.1.193';
 let DEVICE_COMM_KEY = 272727;
+let DEVICE_MODE = 'adms'; // 'adms' | 'binary' — how we receive real-time events
 const DEVICE_PORT = 4370;
 const DEVICE_TIMEOUT = 5000;
 const DEVICE_INPORT = 5200;
@@ -71,9 +72,30 @@ async function connectDevice() {
       });
     }
 
-    // NOTE: Automatic polling disabled — FA110 firmware doesn't respond to
-    // CMD_DATA_WRRQ (the attendance log pull). See docs for ADMS/Push setup.
-    // Use the "Fetch Log" button to test manually.
+    // Binary real-time events (CMD_REG_EVENT). Used for devices without ADMS
+    // (e.g. older F22). FA110 firmware accepts the registration but never emits
+    // event packets — ADMS push is the working path there.
+    if (DEVICE_MODE === 'binary') {
+      try {
+        await zk.getRealTimeLogs((record) => {
+          console.log('[RT] record', record);
+          const event = {
+            timestamp: new Date().toISOString(),
+            userId: record.deviceUserId ?? record.userId ?? record.pin,
+            attTime: record.recordTime instanceof Date
+              ? record.recordTime.toISOString()
+              : String(record.recordTime ?? record.attTime ?? ''),
+            verifyMethod: null,
+            inOutStatus: null,
+            workCode: null,
+          };
+          if (mainWindow) mainWindow.webContents.send('zk:event', event);
+        });
+        console.log('[RT] registered for real-time events');
+      } catch (err) {
+        console.log('[RT ERR]', err && err.message);
+      }
+    }
   } catch (err) {
     console.log('[CONNECT ERR]', err.message);
     connected = false;
@@ -155,10 +177,11 @@ function sendStatus(status) {
   }
 }
 
-// IPC: renderer requests manual reconnect (optionally with new IP / comm key)
-ipcMain.handle('zk:connect', async (_e, ip, commKey) => {
+// IPC: renderer requests manual reconnect (optionally with new IP / comm key / mode)
+ipcMain.handle('zk:connect', async (_e, ip, commKey, mode) => {
   if (ip && typeof ip === 'string') DEVICE_IP = ip.trim();
   if (commKey !== undefined && commKey !== null) DEVICE_COMM_KEY = Number(commKey);
+  if (mode === 'binary' || mode === 'adms') DEVICE_MODE = mode;
   await disconnectDevice();
   await connectDevice();
   return { connected };

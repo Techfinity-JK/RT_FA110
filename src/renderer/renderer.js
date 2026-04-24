@@ -8,6 +8,7 @@ const infoPanel   = document.getElementById('info-panel');
 const chkPause    = document.getElementById('chk-pause');
 const inputIp      = document.getElementById('input-ip');
 const inputCommKey = document.getElementById('input-commkey');
+const inputMode    = document.getElementById('input-mode');
 
 const IP_RE = /^(\d{1,3}\.){3}\d{1,3}$/;
 
@@ -121,8 +122,9 @@ document.getElementById('btn-connect').addEventListener('click', async () => {
   const ip = getIp();
   if (!ip) { inputIp.focus(); return; }
   const commKey = getCommKey();
+  const mode = inputMode.value;
   setStatus({ connecting: true });
-  const result = await window.zkAPI.connect(ip, commKey);
+  const result = await window.zkAPI.connect(ip, commKey, mode);
   setStatus(result);
 });
 

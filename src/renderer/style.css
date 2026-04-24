@@ -121,6 +121,18 @@ button:active { background: #2b6cb0; }
   border-color: #63b3ed;
 }
 
+.ip-field select {
+  background: #0f1117;
+  border: 1px solid #4a5568;
+  border-radius: 5px;
+  color: #e2e8f0;
+  font-size: 0.82rem;
+  padding: 4px 8px;
+  outline: none;
+  cursor: pointer;
+}
+.ip-field select:focus { border-color: #63b3ed; }
+
 .ip-field input.invalid {
   border-color: #fc8181;
 }

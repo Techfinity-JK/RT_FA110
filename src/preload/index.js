@@ -2,7 +2,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('zkAPI', {
   // Commands → main
-  connect: (ip, commKey) => ipcRenderer.invoke('zk:connect', ip, commKey),
+  connect: (ip, commKey, mode) => ipcRenderer.invoke('zk:connect', ip, commKey, mode),
   disconnect: () => ipcRenderer.invoke('zk:disconnect'),
   getInfo: () => ipcRenderer.invoke('zk:getInfo'),
   fetchLog: () => ipcRenderer.invoke('zk:fetchLog'),
